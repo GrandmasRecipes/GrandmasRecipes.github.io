@@ -7,18 +7,33 @@
 		<link rel="icon" href="img/Logo.png" type="image/png" sizes="16x16">
         <meta name="description" content="Beschreibung als Text hier">
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
 	<body onload="loadRecipe()">
 		
+		<!-- Navigation -->
 		<nav>
 			<a href="index.html">
-			<img src="img/Logo.png" alt="Logo">
-			<h1>Grandma's Recipes</h1>
+				<div id="navLogo">
+					<img src="img/Logo.png" alt="Logo">
+					<h1>Grandma's Recipes</h1>
+				</div>
 			</a>
+			<div id="LinksWrapper">
+				<a href="recipes.html" id="NavSearch" onclick="RandomDish()"><i class="material-icons" style="font-size: 5vh; color: #fff;">restaurant_menu</i><p>Zufälliges Gericht</p></a>
+				<div id="LogInRegisterWrapper">
+					<i class="material-icons" style="font-size: 5vh; color: #fff;">face</i>
+					<a href="login.html" class="LogInRegister">Log in </a>
+					<p class="LogInRegister"> | </p>
+					<a href="register.html" class="LogInRegister"> Register</a>
+				</div>
+				<a href="search.html" id="NavSearch"><i class="material-icons" style="font-size: 5vh; color: #fff;">search</i><p>Rezept Suchen</p></a>
+			</div>
 		</nav>
 		
 		<content>
-			<h1 id="headline">Überschrift</h1>
+			<h1 id="headline"></h1>
 			<img src="img/Tomato2.jpg" id="image" alt="Recipe">
 			<h2 id="secondHeadline">Beschreibung:</h2>
 			<p id="description">

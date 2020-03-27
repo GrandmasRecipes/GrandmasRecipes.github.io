@@ -34,23 +34,75 @@ nav {
 	
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 nav img {
-	width: 5vw;
-	height: auto;
+	height: 10vh;
+	width: auto;
 	margin-left: 1vw;
 }
 
-nav a {
+#navLogo{
 	display: flex;
 	flex-direction: row;
 }
 
 nav h1 {
 	color: #fff;
-	font-size: 2vw;
+	font-size: 4vh;
 }
+
+#LinksWrapper i {
+	margin-top: 2.5vh;
+}
+
+#NavSearch {
+	display: flex;
+	flex-direction: row;
+}
+
+#NavSearch p {
+	font-size: 2vh;
+	color: #fff;
+	margin-top: 4vh;
+}
+
+.LogInRegister {
+	color: #fff;
+	font-size: 2vh;
+	margin-top: 4vh;
+}
+
+#LinksWrapper {
+	width: 45vw;
+	height: 10vh;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+#LogInRegisterWrapper {
+	width: 10vw;
+	height: 10vh;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.LogInRegister:hover {
+	color: #dddddd;	
+}
+
+#NavSearch p:hover {
+	font-size: 2vh;
+	color: #dddddd;
+	margin-top: 4vh:
+}
+
+
 
 /**-------------------------------------------------------------------------------------------------------Home----------------------------------------------------------**/
 
@@ -139,7 +191,7 @@ footer #footerHeadline {
 footer #footerHeadline p {
 	color: #fff;
 	margin: 0;
-	font-size: 2vw;
+	font-size: 4vh;
 }
 
 
@@ -185,6 +237,9 @@ content #image {
 	height: 5vh;
 	margin-left: 48vw;
 	margin-top: 2vw;
+	border-style: solid;
+	border-width: 0.3vw;
+	border-radius: 20px;
 	border-color: #ff9705;
 	padding-left: 0.5vw;
 }
