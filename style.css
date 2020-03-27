@@ -1,0 +1,212 @@
+/** CSS-Stylesheet
+*	author: Marvin Aichinger
+**/
+body {
+	margin: 0;
+	font-family: 'Nunito', sans-serif;
+	width: 100%;
+}
+
+/** Typografie **/
+h1 {
+	color: #ff9705;
+}
+
+h2 {
+	color: #e86907;
+}
+
+a {
+	color: #000;
+	text-decoration: none;
+	border-bottom-style: solid;
+	border-bottom-color: #ff9705;
+}
+
+/** Navigation **/
+nav {
+	margin: 0;
+	height: 10vh;
+	width: 100%;
+	background-color: #ff9705;
+	position: sticky;
+	top: 0vw;
+	
+	display: flex;
+	flex-direction: row;
+}
+
+nav img {
+	width: 5vw;
+	height: auto;
+	margin-left: 1vw;
+}
+
+nav a {
+	display: flex;
+	flex-direction: row;
+}
+
+nav h1 {
+	color: #fff;
+	font-size: 2vw;
+}
+
+/**-------------------------------------------------------------------------------------------------------Home----------------------------------------------------------**/
+
+/** Slideshow **/
+@keyframes slideshow {
+	0% {background-image: url(img/Tomato2.jpg);}
+	33% {background-image: url(img/Coffee.jpg);}
+	66% {background-image: url(img/Tomato.jpg);}
+	100% {background-image: url(img/Tomato2.jpg);}
+}
+
+#Slideshow {
+	background-image: url(img/Tomato.jpg);
+	width: 100%;
+	height: 50vh;
+	background-position: cover;
+	margin: 0;
+	
+	animation-name: slideshow;
+	animation-duration: 20s;
+	animation-iteration-count: infinite;
+}
+
+/** Rezepte2 **/
+.homeRecipe2 {
+	width: 100% - 20vw;
+	height: 50vh;
+	margin-left: 10vw;
+	margin-right: 10vw;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.homeRecipe2_image {
+	width: 30%;
+	height: auto;
+}
+
+.homeRecipe2_text {
+	width: 40%;
+}
+
+/** Rezepte1 **/
+.homeRecipe1 {
+	width: 100% - 20vw;
+	height: 50vh;
+	margin-left: 10vw;
+	margin-right: 10vw;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.homeRecipe1_image {
+	width: 30%;
+	height: auto;
+}
+
+.homeRecipe1_text {
+	width: 40%;
+}
+
+/** Footer **/
+footer {
+	width: 100%;
+	height: 50vh;
+	background-color: #e86907;
+}
+
+footer #footerHeadline {
+	width: 100%;
+	height: 10vh;
+	background-color: #ff5008;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+footer #footerHeadline p {
+	color: #fff;
+	margin: 0;
+	font-size: 2vw;
+}
+
+
+/**-------------------------------------------------------------------------------------------------------Recipe----------------------------------------------------------**/
+
+content {
+	margin-left: 20vw;
+	margin-right: 20vw;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+content #headline {
+	text-align: center;
+}
+
+content #image {
+	width: 100%;
+	height: auto;
+}
+
+
+/**-------------------------------------------------------------------------------------------------------Log in----------------------------------------------------------**/
+#LogInBody {
+	background-image: url(img/Auflaufform.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+#LogInForm {
+	width: 100%;
+	height: 90vh;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#LogInForm input {
+	width: 15vw;
+	height: 5vh;
+	margin-left: 48vw;
+	margin-top: 2vw;
+	border-color: #ff9705;
+	padding-left: 0.5vw;
+}
+
+#LogInForm #submitButton {
+	width: 5vw;
+	background-color: #e86907;
+}
+
+#LogInForm #submitButton:hover {
+	width: 5vw;
+	background-color: #ffca08;
+}
+
+
+/**-------------------------------------------------------------------------------------------------------Register----------------------------------------------------------**/
+#RegisterBody {
+	background-image: url(img/Tomato2.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+
+
+
