@@ -75,7 +75,7 @@ nav h1 {
 }
 
 #LinksWrapper {
-	width: 45vw;
+	width: 50vw;
 	height: 10vh;
 	
 	display: flex;
@@ -84,7 +84,7 @@ nav h1 {
 }
 
 #LogInRegisterWrapper {
-	width: 10vw;
+	width: 15vw;
 	height: 10vh;
 	
 	display: flex;
@@ -100,6 +100,57 @@ nav h1 {
 	font-size: 2vh;
 	color: #dddddd;
 	margin-top: 4vh:
+}
+
+/** Dropdown **/
+
+.dropdownButton {
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdownContent a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdownContent a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+@media (max-width: 768px) {
+	nav #LinksWrapper p {
+		display: none;
+	}
+	
+	.LogInRegister {
+		display: none;
+	}
+	
+	#navLogo h1 {
+		margin: 0;
+		height: 9vh;
+		font-size: 3.5vh;
+	}
 }
 
 
@@ -262,6 +313,43 @@ content #image {
 	background-position: center top;
 }
 
+/**-------------------------------------------------------------------------------------------------------Search----------------------------------------------------------**/
+#SearchBody {
+	background-image: url(img/GabelMesser.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+}
 
+#SearchForm input {
+	width: 15vw;
+	height: 5vh;
+	margin-right: 40vw;
+	margin-top: 2vw;
+	border-style: solid;
+	border-width: 0.3vw;
+	border-radius: 20px;
+	border-color: #ff9705;
+	padding-left: 0.5vw;
+}
+
+#SearchForm {
+	width: 100%;
+	height: 90vh;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#SearchForm #submitButton {
+	width: 5vw;
+	background-color: #e86907;
+}
+
+#SearchForm #submitButton:hover {
+	width: 5vw;
+	background-color: #ffca08;
+}
 
 
