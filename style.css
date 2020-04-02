@@ -137,7 +137,7 @@ nav h1 {
   display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 	nav #LinksWrapper p {
 		display: none;
 	}
@@ -152,6 +152,7 @@ nav h1 {
 		font-size: 3.5vh;
 	}
 }
+
 
 
 
@@ -245,6 +246,24 @@ footer #footerHeadline p {
 	font-size: 4vh;
 }
 
+#footerContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#footerContentData {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.FooterKontaktdaten {
+	width: 30vw;
+	height: 90%;
+}
 
 /**-------------------------------------------------------------------------------------------------------Recipe----------------------------------------------------------**/
 
@@ -332,6 +351,18 @@ content #image {
 	padding-left: 0.5vw;
 }
 
+#SearchForm select {
+	width: 15vw;
+	height: 5vh;
+	margin-right: 40vw;
+	margin-top: 2vw;
+	border-style: solid;
+	border-width: 0.3vw;
+	border-radius: 20px;
+	border-color: #ff9705;
+	padding-left: 0.5vw;
+}
+
 #SearchForm {
 	width: 100%;
 	height: 90vh;
@@ -350,6 +381,11 @@ content #image {
 #SearchForm #submitButton:hover {
 	width: 5vw;
 	background-color: #ffca08;
+}
+
+#SearchForm option {
+	background-color: #ff9705;
+	color: #fff;
 }
 
 
