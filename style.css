@@ -222,10 +222,50 @@ nav h1 {
 	width: 40%;
 }
 
+@media (max-width: 900px) {
+	.homeRecipe1_text p {
+		display: none;
+	}
+	
+	.homeRecipe2_text p {
+		display: none;
+	}
+	
+	.homeRecipe1_text h2 {
+		text-align: center;
+	}
+	
+	.homeRecipe2_text h2 {
+		text-align: center;
+	}
+	
+	.homeRecipe1 {
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: center;
+	}
+	
+	.homeRecipe2 {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	
+	.homeRecipe1_image {
+		height: 70%;
+		width: auto;
+	}
+	
+	.homeRecipe2_image {
+		height: 70%;
+		width: auto;
+	}
+}
+
 /** Footer **/
 footer {
 	width: 100%;
-	height: 50vh;
+	height: 55vh;
 	background-color: #e86907;
 }
 
@@ -263,6 +303,10 @@ footer #footerHeadline p {
 .FooterKontaktdaten {
 	width: 30vw;
 	height: 90%;
+}
+
+.FooterKontaktdaten p {
+	text-align: center;
 }
 
 /**-------------------------------------------------------------------------------------------------------Recipe----------------------------------------------------------**/

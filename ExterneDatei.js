@@ -43,7 +43,6 @@ function RandomDish() {
 	window.name = "" + getRndInteger(0, RecipesArray.length - 1);
 }
 
-
 function saveRecipeIndex(string) {
 	window.name = string;
 }
