@@ -30,7 +30,7 @@ nav {
 	width: 100%;
 	background-color: #ff9705;
 	position: sticky;
-	top: 0vw;
+	top: -0.01vw;
 	
 	display: flex;
 	flex-direction: row;
@@ -178,12 +178,21 @@ nav h1 {
 	animation-iteration-count: infinite;
 }
 
+#homeRecipes {
+	width: 100%;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 /** Rezepte2 **/
 .homeRecipe2 {
-	width: 100% - 20vw;
+	width: 80vw;
 	height: 50vh;
-	margin-left: 10vw;
-	margin-right: 10vw;
+	/**margin-left: 10vw;
+	margin-right: 10vw;**/
 	
 	display: flex;
 	flex-direction: row;
@@ -202,10 +211,10 @@ nav h1 {
 
 /** Rezepte1 **/
 .homeRecipe1 {
-	width: 100% - 20vw;
+	width: 80vw;
 	height: 50vh;
-	margin-left: 10vw;
-	margin-right: 10vw;
+	/**margin-left: 10vw;
+	margin-right: 10vw;**/
 	
 	display: flex;
 	flex-direction: row;
@@ -220,6 +229,14 @@ nav h1 {
 
 .homeRecipe1_text {
 	width: 40%;
+}
+
+.homeRecipeLink {
+	border-style: none;
+}
+
+.homeRecipeLink:hover div{
+	background-color: #eeeeee;
 }
 
 @media (max-width: 900px) {
@@ -320,6 +337,7 @@ footer #footerHeadline p {
 content {
 	margin-left: 20vw;
 	margin-right: 20vw;
+	margin-bottom: 4vh;
 	
 	display: flex;
 	flex-direction: column;
@@ -374,6 +392,21 @@ content #image {
 	background-color: #ffca08;
 }
 
+@media (max-width: 900px) {
+	#LogInForm input {
+		width: 60vw;
+		height: 7vh;
+		margin-left: 0;
+	}
+	
+	#LogInForm #submitButton {
+		width: 15vw;
+	}
+	
+	#LogInForm #submitButton:hover {
+		width: 15vw;
+	}
+}
 
 /**-------------------------------------------------------------------------------------------------------Register----------------------------------------------------------**/
 #RegisterBody {
@@ -438,4 +471,24 @@ content #image {
 	color: #fff;
 }
 
-
+@media (max-width: 900px) {
+	#SearchForm input {
+		width: 60vw;
+		height: 7vh;
+		margin-right: 0;
+	}
+	
+	#SearchForm select {
+		width: 60vw;
+		height: 7vh;
+		margin-right: 0;
+	}
+	
+	#SearchForm #submitButton {
+		width: 15vw;
+	}
+	
+	#SearchForm #submitButton:hover {
+		width: 15vw;
+	}
+}
