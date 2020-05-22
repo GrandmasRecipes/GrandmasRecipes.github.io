@@ -10,7 +10,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
-	<body id="RegisterBody">
+	<body id="RegisterBody" onload="registerHTML()">
 		
 		<!-- Navigation -->
 		<nav>
@@ -39,12 +39,12 @@
 			</div>
 		</nav>
 		
-		<form id="LogInForm">
-			<input type="text" placeholder="Benutzername"></input>
-			<input type="mail" placeholder="E-Mail"></input>
-			<input type="password" placeholder="Passwort"></input>
-			<input type="password" placeholder="Passwort Überprüfung"></input>
-			<input id="submitButton" type="submit" value="Log in"></input>
+		<form id="RegisterForm">
+			<input type="text" placeholder="Benutzername" id="userName"></input>
+			<input type="mail" placeholder="E-Mail" id="mail"></input>
+			<input type="password" placeholder="Passwort" id="password"></input>
+			<input type="password" placeholder="Passwort Überprüfung" id="password2"></input>
+			<input id="submitButton" type="submit" value="Register"></input>
 		</form>
 		
 		<script src="ExterneDatei.js"></script>

@@ -3,14 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Recipe</title>
-		<link rel="icon" href="img/Logo.png" type="image/png" sizes="16x16">
+        <title>User</title>
         <meta name="description" content="Beschreibung als Text hier">
+		<link rel="icon" href="img/Logo.png" type="image/png" sizes="16x16">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
-	<body id="recipeBody" onload="loadRecipe()">
+	<body onload="loadUser()">
+		<script src="ExterneDatei.js"></script>
 		
 		<!-- Navigation -->
 		<nav>
@@ -39,21 +40,19 @@
 			</div>
 		</nav>
 		
-		<content>
-			<h1 id="headline"></h1>
-			<img src="" id="image" alt="Recipe">
-			<h2 id="secondHeadline">Beschreibung:</h2>
-			<p id="description" style="margin-bottom: 0;"></p>
-			<ul id="gang" style="margin-top: 0;">
-			</ul>
-			
-			<h2 id="secondHeadline">Zutaten:</h2>
-			<ul id="ingredients">
-			</ul>
-			
-			<h2 id="secondHeadline">Zubereitung:</h2>
-			<p id="making"></p>
-		</content>
+		<div id="UserContent">
+			<h2 class="userHeadline">User:</h2>
+			<div id="userInformation">
+				<p id="UserName"><i class="material-icons" style="font-size: 3vh; color: #000;">perm_identity</i></p>
+				<p id="UserMail"><i class="material-icons" style="font-size: 3vh; color: #000;">email</i></p>
+				<p id="UserKey"><i class="material-icons" style="font-size: 3vh; color: #000;">vpn_key</i></p>
+				<p id="UserLogOut"><i class="material-icons" style="font-size: 3vh; color: #ff0000;">highlight_off</i>Abmelden</p>
+			</div>
+			<h2 class="userHeadline" id="favRezepteH2">Favorisierte Rezepte:</h2>
+			<div id="favRecipes">
+				
+			</div>
+		</div>
 		
 		<footer>
 			<div id="footerHeadline">
@@ -104,6 +103,5 @@
 			</div>
 		</footer>
 		
-		<script src="ExterneDatei.js"></script>
 	</body>
 </html>

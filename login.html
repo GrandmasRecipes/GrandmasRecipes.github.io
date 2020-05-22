@@ -10,7 +10,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
-	<body id="LogInBody">
+	<body id="LogInBody" onload="loginHTML()">
 		
 		<!-- Navigation -->
 		<nav>
@@ -41,7 +41,7 @@
 		
 		<form id="LogInForm">
 			<input type="text" placeholder="Benutzername" id="LogInBenutzername"></input>	
-			<input type="password" placeholder="Passwort"></input>
+			<input type="password" placeholder="Passwort" id="password"></input>
 			<input id="submitButton" type="submit" value="Log in"></input>
 		</form>
 		

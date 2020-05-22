@@ -1,9 +1,11 @@
 
-//===================================================Rezepte Array==========================================================
+//====================================Variablen========================================
 let homeIndex1;
 let homeIndex2;
 let homeIndex3;
 
+
+//================================Array mit Rezepten=====================================
 let RecipesArray = [
 	{
 		"headline": "Palatschinken",
@@ -38,7 +40,7 @@ let RecipesArray = [
 		"description": "Eine klassische Nudelsuppe mit Gemüse.",
 		"ingredients": "2 Stk Karotten;1 L Wasser (heiß);1 EL Öl;1 Prise Salz;1 Prise Pfeffer;1 Prise Majoran;1 Stk Petersilie;1 EL Schnittlauch (gehackt);1 Prise Muskat (gerieben);3 Stk Wacholderbeeren;50g Suppennudeln",
 		"making": "Das Gemüse und die Kräuter putzen, waschen und schneiden. Die Karotten in Scheiben schneiden. Im heißen Öl kurz anrösten und mit heißem Wasser aufgießen. Die Suppe mit Suppengewürz würzen und etwas 20 Minuten zugedeckt köcheln lassen. Die Nudeln in kochendes Salzwasser geben und leicht, 5 Minuten, kochen. Danach abseihen und kurz vor dem Servieren in die Suppe geben.",
-		"time": "45 min#",
+		"time": "45 min",
 		"gang": "Vorspeise;Hauptspeise"
 	},
 	{
@@ -106,6 +108,7 @@ let RecipesArray = [
 	}
 ]
 
+//==================================Load and save Recipes / Random Recipes=================================
 function RandomDish() {
 	window.name = "" + getRndInteger(0, RecipesArray.length - 1);
 }
@@ -115,6 +118,8 @@ function saveRecipeIndex(string) {
 }
 
 function loadRecipe() {
+	extendedNav();
+	floatingButton();
 	let index = Number(window.name);
 	
 	document.getElementById('headline').innerHTML = RecipesArray[index].headline;
@@ -145,8 +150,11 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-/**Home**/
+
+//===================================Home====================================================
+
 function loadHomeRecipes() {
+	extendedNav();
 	RandomDish();
 	homeIndex1 = Number(window.name);
 	document.getElementById('HomeRecipeImg1').src = RecipesArray[Number(window.name)].src;
@@ -183,43 +191,608 @@ function loadHomeRecipe(number) {
 	}
 }
 
-document.querySelector('#SearchForm').addEventListener('submit', (event) => {
+
+//=================================Suche========================================================
+
+function searchHTML() {
+	extendedNav();
+	document.querySelector('#SearchForm').addEventListener('submit', (event) => {
 	event.preventDefault();
-	let suchenValue = document.querySelector("#suchen").value;
-	//suchenValue.toLowerCase();
 	
-	if (suchenValue === "") {
-		alert('Bitte geben sie einen Suchbegriff ein!');
+	let suchenResult = onlySuchen();
+	if (suchenResult === null) {
 		return;
 	}
 	
-	let result = [];
+	let zutatenResult = onlyZutaten(suchenResult);
+	if (zutatenResult === null) {
+		return;
+	}
 	
+	let timeResult = onlyTime(zutatenResult);
+	if (timeResult === null) {
+		return;
+	}
+	
+	let result = onlyGang(timeResult);
+	if (result === null) {
+		return;
+	}
+	
+	let searchForm = document.querySelector('#SearchForm');
+	searchForm.remove();
+	let a;
+	for (let i = 0;i < result.length;i++) {
+		a = document.createElement('a');
+		a.innerHTML = RecipesArray[result[i]].headline;
+		a.href = "recipes.html";
+		a.classList.add('searchResult');
+		a.addEventListener('click', function() {
+			saveRecipeIndex(result[i]);
+		});	
+		document.querySelector('#SearchResults').append(a);
+	}
+	
+});
+}
+
+function onlySuchen() {
+	let suchenValue = document.querySelector("#suchen").value;
+	suchenValue = suchenValue.toLowerCase();
+	
+	let result = [];
+	//Leere Suche	
+	if (suchenValue === "") {
+		return result;
+	}
+	
+	//Lösungen suchen
 	for (let i = 0; i < RecipesArray.length; i++) {
-		let temp = RecipesArray[i].headline.search(suchenValue); //.toLowerCase()
+		let temp = RecipesArray[i].headline
+		temp = temp.toLowerCase();
+		temp = temp.search(suchenValue);
 		if (temp != -1) {
 			result.push(i);
 		}
 	}
 	
+	//Nichts Gefunden
 	if (result.length === 0) {
-		alert('Leider kein passendes Rezept gefunden :(');
+		let searchForm = document.querySelector('#SearchForm');
+		searchForm.remove();
+		
+		let a = document.createElement('a');
+		a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+		a.href = "search.html";
+		a.classList.add('searchResult');
+		document.querySelector('#SearchResults').append(a);
+		return null;
+	}
+	
+	return result;
+	
+	/*
+	let searchForm = document.querySelector('#SearchForm');
+	searchForm.remove();
+	let a;
+	for (let i = 0;i < result.length;i++) {
+		a = document.createElement('a');
+		a.innerHTML = RecipesArray[result[i]].headline;
+		a.href = "recipes.html";
+		a.classList.add('searchResult');
+		a.addEventListener('click', function() {
+			saveRecipeIndex(result[i]);
+		});	
+		document.querySelector('#SearchResults').append(a);
+	}
+	*/
+}
+
+function onlyZutaten(suchenResult) {
+	let zutatenValue = document.querySelector("#zutaten").value;
+	zutatenValue = zutatenValue.toLowerCase();
+	
+	//Nichts Eingegeben
+	if (zutatenValue === '') {
+		return suchenResult;
+	}
+	
+	//Für die Suche vorbereiten
+	zutatenValue = zutatenValue.replace(' ', '');
+	let result = zutatenValue.split(',');
+	
+	//Wenn in ersten Formular nichts eingegebn
+	if (suchenResult.length == 0) {
+		let finishedResult = [];
+		for (let i = 0; i < RecipesArray.length; i++) {
+			let temp = RecipesArray[i].ingredients;
+			temp = temp.toLowerCase();
+			
+			let isOK = true;
+			for (let j = 0; j < result.length; j++) {
+				
+				if (temp.search(result[j]) == -1) {
+						isOK = false;
+						j = result.length;
+				}
+				
+			}
+			
+			if (isOK) {
+				finishedResult.push(i);
+			}
+		}
+		
+		if (finishedResult.length == 0) {
+			let searchForm = document.querySelector('#SearchForm');
+			searchForm.remove();
+		
+			let a = document.createElement('a');
+			a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+			a.href = "search.html";
+			a.classList.add('searchResult');
+			document.querySelector('#SearchResults').append(a);
+			return null;
+		}
+		return finishedResult;
+	}
+	
+	//Wenn schon etwas gesucht wurde
+	for (let i = 0; i < suchenResult.length; i++) {
+		let array = RecipesArray[suchenResult[i]].ingredients;
+		array = array.toLowerCase();
+		array = array.search(result[i]);
+		if (array == -1) {
+			suchenResult.splice(i, 1);
+		}
+	}
+	
+	//nichts gefunden
+	if (suchenResult.length == 0) {
+		let searchForm = document.querySelector('#SearchForm');
+		searchForm.remove();
+		
+		let a = document.createElement('a');
+		a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+		a.href = "search.html";
+		a.classList.add('searchResult');
+		document.querySelector('#SearchResults').append(a);
+		return null;
+	}else {
+		return suchenResult;
+	}
+}
+
+function onlyTime(zutatenResult) {
+	let time = document.querySelector("#time");
+	
+	if (time.selectedIndex == 0 && zutatenResult.length > 0) {
+		return zutatenResult;
+	}
+	
+	if (zutatenResult.length == 0) {
+		let value = time.value;
+		let result = [];
+		
+		if (time.selectedIndex == 0) {
+			for (let i = 0; i < RecipesArray.length; i++) {
+				result.push(i);
+			}
+		}else {
+			for (let i = 0; i < RecipesArray.length; i++) {
+				let temp = RecipesArray[i].time;
+				temp = temp.replace('min', '');
+				temp = temp.replace(' ', '');
+				temp = Number(temp);
+				
+				if (temp < value) {
+					result.push(i);
+				}
+				
+			}
+		}
+		
+		if (result.length == 0) {
+			let searchForm = document.querySelector('#SearchForm');
+			searchForm.remove();
+			
+			let a = document.createElement('a');
+			a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+			a.href = "search.html";
+			a.classList.add('searchResult');
+			document.querySelector('#SearchResults').append(a);
+			return null;
+		}
+		
+		
+		return result;
+	}
+	
+	let value = time.value;
+	
+	for (let i = 0; i < zutatenResult.length; i++) {
+		let temp = RecipesArray[zutatenResult[i]].time;
+		temp = temp.replace('min', '');
+		temp = temp.replace(' ', '');
+		temp = Number(temp);
+		
+		if (temp >= value) {
+			zutatenResult.splice(i, 1)
+		}
+		
+	}
+	
+	if (zutatenResult.length == 0) {
+		let searchForm = document.querySelector('#SearchForm');
+		searchForm.remove();
+		
+		let a = document.createElement('a');
+		a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+		a.href = "search.html";
+		a.classList.add('searchResult');
+		document.querySelector('#SearchResults').append(a);
+		return null;
+	}
+	
+	return zutatenResult;
+	
+}
+
+function onlyGang(timeResult) {
+	let gang = document.querySelector("#gang");
+	
+	if (gang.selectedIndex == 0) {
+		return timeResult;
+	}
+	
+	let value = gang.value;
+	
+	let result = [];
+	for (let i = 0; i < timeResult.length; i++) {
+		let temp = RecipesArray[timeResult[i]].gang;
+		temp = temp.search(value);
+		if (Number(temp) !== -1) {
+			result.push(timeResult[i]);
+		}
+	}
+	
+	if (result.length == 0) {
+		let searchForm = document.querySelector('#SearchForm');
+		searchForm.remove();
+		
+		let a = document.createElement('a');
+		a.innerHTML = "Leider kein passendes Rezept gefunden :(";
+		a.href = "search.html";
+		a.classList.add('searchResult');
+		document.querySelector('#SearchResults').append(a);
+		return null;
+	}
+	
+	return result;
+	
+}
+
+
+//================================Log in and Register===========================================
+let UserArray;
+if (document.cookie) {
+	UserArray = document.cookie;
+	UserArray = UserArray.replace("userArray=", "");
+	UserArray = JSON.parse(UserArray);
+}else {
+	UserArray = [];
+}
+
+function registerHTML() {
+	extendedNav();
+	document.querySelector('#RegisterForm').addEventListener('submit', (event) => {
+		event.preventDefault();
+		
+		let userName = document.querySelector('#userName');
+		let mail = document.querySelector('#mail');
+		let password1 = document.querySelector('#password');
+		let password2 = document.querySelector('#password2');
+		let registerOk = true;
+		
+		let mailFilter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		
+		if (!mailFilter.test(mail.value)) {
+			mail.style.borderColor = "#ff0000";
+			mail.placeholder = 'E-Mail nicht gültig!'
+			mail.value = "";
+			registerOk = false;
+		}else {
+			mail.style.borderColor = "#ff9705";
+			mail.placeholder = 'E-Mail'
+		}
+		
+		let nameFilter = /^([a-zA-Z])+$/;
+		let nameAvailable = true;
+		
+		for (let i = 0; i < UserArray.length; i++) {
+			if (UserArray[i].name == userName.value) {
+				nameAvailable = false;
+			}
+		}
+		
+		if (!nameFilter.test(userName.value) || nameAvailable == false) {
+			userName.style.borderColor = "#ff0000";
+			userName.placeholder = 'Benutzername nicht gültig!'
+			userName.value = "";
+			registerOk = false;
+		}else {
+			userName.style.borderColor = "#ff9705";
+			userName.placeholder = 'Benutzername'
+		}
+		
+		if (password1.value != password2.value) {
+			password1.style.borderColor = "#ff0000";
+			password1.placeholder = 'Passwörter müssen gleich sein!'
+			password1.value = "";
+			
+			password2.style.borderColor = "#ff0000";
+			password2.placeholder = 'Passwörter müssen gleich sein!'
+			password2.value = "";
+			registerOk = false;
+		}else {
+			password1.style.borderColor = "#ff9705";
+			password1.placeholder = 'Passwort'
+			
+			password2.style.borderColor = "#ff9705";
+			password2.placeholder = 'Passwort Überprüfung'
+		}
+		
+		if (password1.value.length < 5) {
+			password1.style.borderColor = "#ff0000";
+			password1.placeholder = 'Passwort zu kurz!';
+			password1.value = "";
+			registerOk = false;
+		}else {
+			password1.style.borderColor = "#ff9705";
+			password1.placeholder = 'Passwort'
+		}
+		
+		if (registerOk) {
+			UserArray.push({
+				name: userName.value,
+				mail: mail.value,
+				pword: password1.value,
+				loggedin: false,
+				favourites: []
+			});
+			
+			document.cookie = "userArray=" + JSON.stringify(UserArray);
+			
+			mail.remove();
+			userName.remove();
+			password2.remove();
+			password1.remove();
+			document.querySelector('#submitButton').remove();
+			let p = document.createElement('p');
+			p.innerHTML = "Erfolgreich Registriert!<br>Melden Sie sich gleich an :)";
+			p.style.fontSize = "5vh";
+			p.style.color = "#fff";
+			let RegisterForm = document.querySelector('#RegisterForm')
+			RegisterForm.append(p);
+			RegisterForm.style.backgroundColor = '#ff5008';
+			
+		}
+		
+	});
+}
+
+function loginHTML() {
+	extendedNav();
+	document.querySelector('#LogInForm').addEventListener('submit', (event) => {
+		event.preventDefault();
+		
+		let userName = document.querySelector('#LogInBenutzername');
+		let pword = document.querySelector('#password');
+		
+		for (let i = 0; i < UserArray.length; i++) {
+			if (UserArray[i].name == userName.value) {
+				if (UserArray[i].pword == pword.value) {
+					
+					let someoneLoggedIn = false;
+					for (let i = 0; i < UserArray.length; i++) {
+						if (UserArray[i].loggedin == true) {
+							someoneLoggedIn = true;
+						}
+					}
+					
+					if (!someoneLoggedIn) {
+						
+						userName.remove();
+						pword.remove();
+						document.querySelector('#submitButton').remove();
+						let p = document.createElement('p');
+						p.innerHTML = "Erfolgreich Angemeldet!<br>Sie könen nun Rezepte favorisieren :D";
+						p.style.fontSize = "5vh";
+						p.style.color = "#fff";
+						let LogInForm = document.querySelector('#LogInForm')
+						LogInForm.append(p);
+						LogInForm.style.backgroundColor = '#ff5008';
+						
+						UserArray[i].loggedin = true;
+						document.cookie = "userArray=" + JSON.stringify(UserArray);
+						
+						OverwriteSomeoneLoggedIn();
+						extendedNav();
+						
+					}else {
+						userName.placeholder = "Bereits ein Nutzer eingeloggt";
+						userName.value = "";
+						userName.style.borderColor = "#ff0000";
+					}
+				}
+			}
+		}
+		
+		
+		
+	});
+}
+
+
+//==============================Floating Button==============================================
+function floatingButton() {
+	//let button = document.querySelector('#floatingButton');
+	//button.innerHTML = '<i class="material-icons" style="font-size: 4vh; color: #fff;">star</i>';
+	
+	let index = -1;
+	console.log(UserArray);
+	for (let i = 0; i < UserArray.length; i++) {
+		if (UserArray[i].loggedin == true) {
+			index = i;
+		}
+	}
+	
+	if (index == -1) {
 		return;
 	}
 	
-	//Zurzeit nur für ein Ergebnis
-	alert("Objekt Index: " + result);
+	let btn = document.createElement('button');
 	
-	let searchForm = document.querySelector('#SearchForm');
-	searchForm.remove();
+	if (UserArray[index].favourites.includes(Number(window.name))) {
+		btn.innerHTML = '<i class="material-icons" style="font-size: 4vh; color: #fff;">star</i>';
+	}else {
+		btn.innerHTML = '<i class="material-icons" style="font-size: 4vh; color: #fff;">star_border</i>';
+	}
 	
-	let a = document.createElement('a');
-	a.innerHTML = RecipesArray[result[0]].headline;
-	a.href = "recipes.html";
-	a.addEventListener('click', saveRecipeIndex(result[0]));
+	btn.id = "floatingButton";
+	btn.addEventListener('click', () => {
+		
+		if (UserArray[index].favourites.includes(Number(window.name))) {
+			for (let i = 0; i < UserArray[index].favourites.length; i++) {
+				if (UserArray[index].favourites[i] == window.name) {
+					UserArray[index].favourites.splice(i, 1);
+				}
+			}
+			document.cookie = "userArray=" + JSON.stringify(UserArray);
+			btn.innerHTML = '<i class="material-icons" style="font-size: 4vh; color: #fff;">star_border</i>';
+		}else {
+			UserArray[index].favourites.push(Number(window.name));
+			document.cookie = "userArray=" + JSON.stringify(UserArray);
+			btn.innerHTML = '<i class="material-icons" style="font-size: 4vh; color: #fff;">star</i>';
+		}
+	});
 	
-	document.querySelector('#SearchBody').append(a);
+	document.querySelector('#recipeBody').append(btn);
 	
-});
+}
+
+
+//=============================Benutzer Seite================================================
+
+let someoneLoggedIn = false;
+let userIndex = 0;
+for (let i = 0; i < UserArray.length; i++) {
+	if (UserArray[i].loggedin == true) {
+		someoneLoggedIn = true;
+		userIndex = i;
+		i = UserArray.length;
+	}
+}
+
+function extendedNav() {
+	if (someoneLoggedIn) {
+		let a = document.createElement('a');
+		a.href = "user.html";
+		a.id = "NavSearch";
+		a.innerHTML = '<i class="material-icons" style="font-size: 5vh; color: #fff;">face</i><p>User</p>';
+		
+		let wrapper = document.querySelector('#LinksWrapper');
+		wrapper.replaceChild(a, wrapper.childNodes[3]);
+	}
+}
+
+function loadUser() {
+	extendedNav();
+	
+	let userName = document.querySelector('#UserName');
+	userName.innerHTML += UserArray[userIndex].name;
+	
+	let mail = document.querySelector('#UserMail');
+	mail.innerHTML += UserArray[userIndex].mail;
+	
+	let key = document.querySelector('#UserKey');
+	key.innerHTML += UserArray[userIndex].pword;
+	
+	let userLogOut = document.querySelector('#UserLogOut');
+	userLogOut.addEventListener('click', () => {
+		let cfrm = confirm('Möchten Sie wirklich ausloggen?');
+		if (cfrm) {
+			UserArray[userIndex].loggedin = false;
+			document.cookie = "userArray=" + JSON.stringify(UserArray);
+			window.location.href = "./index.html";
+		}
+	});
+	
+	let favArray = UserArray[userIndex].favourites;
+	let wrapper = document.querySelector('#favRecipes');
+	
+	if (favArray.length == 0) {
+		document.querySelector('#favRezepteH2').remove();
+		document.querySelector('#userInformation').style.marginBottom = "4vh";
+	}
+	
+	for (let i = 0; i < favArray.length; i++) {
+		
+		let a = document.createElement('a');
+		a.href = "recipes.html";
+		a.classList.add('userFavA');
+		a.addEventListener('click', function() {
+			saveRecipeIndex(favArray[i]);
+		});
+		
+		let p = document.createElement('p');
+		p.innerHTML = innerHTML = RecipesArray[favArray[i]].headline;
+		p.classList.add('userFavP');
+		
+		let img = document.createElement('img');
+		img.src = RecipesArray[favArray[i]].src;
+		img.classList.add('userFavImg');
+		
+		let div = document.createElement('div');
+		div.id = "userFavPImg";
+		div.append(p, img);
+		
+		let icon = document.createElement('i');
+		icon.innerHTML = 'delete';
+		icon.classList.add('material-icons');
+		icon.classList.add('userFavDelete');
+		icon.style = "font-size: 5vh; color: #ff0000;";
+		icon.addEventListener('click', () => {
+			UserArray[userIndex].favourites.splice(favArray[i - 1], 1);
+			document.cookie = "userArray=" + JSON.stringify(UserArray);
+			window.location.href = "./user.html";
+		});
+		
+		let div2 = document.createElement('div');
+		div2.id = "userFavWrapper";
+		div2.append(a, icon);
+		
+		wrapper.append(div2);
+		a.append(div);
+		
+	}
+}
+
+function OverwriteSomeoneLoggedIn() {
+	someoneLoggedIn = false;
+	userIndex = 0;
+	for (let i = 0; i < UserArray.length; i++) {
+		if (UserArray[i].loggedin == true) {
+			someoneLoggedIn = true;
+			userIndex = i;
+			i = UserArray.length;
+		}
+	}
+}
+
+
+
+
+
 
 

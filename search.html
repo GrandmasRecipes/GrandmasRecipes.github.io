@@ -10,7 +10,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	</head>
-	<body id="SearchBody">
+	<body id="SearchBody" onload="searchHTML()">
 		
 		<!-- Navigation -->
 		<nav>
@@ -39,26 +39,29 @@
 			</div>
 		</nav>
 		
+		<div id="SearchResults">
+		</div>
+		
 		<form id="SearchForm">
 			<input type="text" placeholder="Suchen" id="suchen"></input>
-			<input type="text" placeholder="Zutaten"></input>
-			<select name="Zubereitungszeit">
+			<input type="text" placeholder="Zutaten" id="zutaten"></input>
+			<select name="Zubereitungszeit" id="time">
 				<option value="Zubereitungszeit">Zubereitungszeit (Alle)</option>
-				<option value="10min">weniger als 10 min</option>
-				<option value="20min">weniger als 20 min</option>
-				<option value="30min">weniger als 30 min</option>
-				<option value="40min">weniger als 40 min</option>
-				<option value="50min">weniger als 50 min</option>
-				<option value="60min">weniger als 60 min</option>
+				<option value="10">weniger als 10 min</option>
+				<option value="20">weniger als 20 min</option>
+				<option value="30">weniger als 30 min</option>
+				<option value="40">weniger als 40 min</option>
+				<option value="50">weniger als 50 min</option>
+				<option value="60">weniger als 60 min</option>
 			</select>
-			<select name="Gang">
-				<option id="option" value="Zubereitungszeit">Gang (Alle)</option>
+			<select name="Gang" id="gang">
+				<option id="option" value="Gang">Gang (Alle)</option>
 				<option value="Vorspeise">Vorspeise</option>
 				<option value="Hauptspeise">Hauptspeise</option>
 				<option value="Nachspeise">Nachspeise</option>
 				<option value="Jause">Jause</option>
 				<option value="Salat">Salat</option>
-				<option value="Fruehstueck">Frühstück</option>
+				<option value="Frühstück">Frühstück</option>
 			</select>
 			<input id="submitButton" type="submit" value="Suchen"></input>
 		</form>
